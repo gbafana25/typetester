@@ -9,4 +9,5 @@ Typing practice for the command line on Linux
 - clear typed word with ansi escape sequence
 
 ## TODO
-- read typed chars until space, compare to word in paragraph   
+- fix first word not reading correctly
+- fix segfaulting at end of text
