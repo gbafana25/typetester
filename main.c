@@ -9,6 +9,7 @@
 typedef struct {
 	int curr;
 	int start; 
+	int cpos;
 
 } position; 
 
@@ -18,7 +19,6 @@ typedef struct {
 	int num_correct;
 	int num_wrong;
 	int total_words;
-	bool last_wrong;
 
 } scoring_data;
 
@@ -65,35 +65,27 @@ int main()
 	char test;
 	ps.curr = 0;
 	ps.start = 0;
+	ps.cpos = 0;
 	printf("\n\033[31;1mCommand Line Typing Tester\033[0m\n\n");
-	//char *text = "Lorem ipsum dolor sit amet.";
+	//char *text = "Lorem ipsum dolor";
 	char *text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut ornare lectus sit amet. Nec sagittis aliquam malesuada bibendum.";
 	printf("%s\n", text);
 	printf("\n");
 	setup_terminal();
 	char *typed_word;	
+	//memset(&typed_word, 0, sizeof(typed_word));
 	while(read(STDIN_FILENO, &test, 1) == 1)
 	{
-		//printf("%d %d\n", ps.curr, strlen(text));
+				
+		
 		if(test == ' ') {
-			//printf("%s\n", typed_word);
 			char *cw = get_word_from_text(text);
-			if(strncmp(cw, typed_word, strlen(cw)) == 0)
+			if(strcmp(cw, typed_word) == 0)// && strlen(cw) == strlen(typed_word))//, strlen(cw)) == 0)
 			{
 				
 				
 				write(STDOUT_FILENO, "\e[2K", 5);
 				write(STDOUT_FILENO, "\r", 2);
-				/*
-				if(sd.last_wrong)
-				{
-					write(STDOUT_FILENO, "\e[1A", 5);	
-					write(STDOUT_FILENO, "\e[2K", 5);
-					//write(STDOUT_FILENO, "\e[1B", 5);	
-
-				}
-				sd.last_wrong = false;
-				*/
 				write(STDOUT_FILENO, "\e[1A", 5);	
 				write(STDOUT_FILENO, "\e[2K", 5);
 
@@ -107,15 +99,16 @@ int main()
 				write(STDOUT_FILENO, "\e[1A", 5);	
 				write(STDOUT_FILENO, "\e[2K", 5);
 
-
-				//sd.last_wrong = true;				
-
 				printf("\033[31;1mWrong word\033[0m\n");
 			}
-			memset(typed_word, '\0', strlen(typed_word));
+			memset(typed_word, 0, strlen(typed_word));
+			sd.total_words++;
 		} else {
 			strncat(typed_word, &test, 1);	
+			
 		}
+		
+		ps.cpos++;
 	}
 	return 0;
 }
