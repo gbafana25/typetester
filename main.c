@@ -6,10 +6,12 @@
 #include <stdbool.h>
 
 
+
 typedef struct {
 	int curr;
 	int start; 
 	int cpos;
+	int plen;
 
 } position; 
 
@@ -34,9 +36,21 @@ void setup_terminal()
 
 }
 
+char *read_from_file() {
+	FILE *src;
+	src = fopen("a.txt", "r");
+	char *t = malloc(8 * sizeof(char));
+	fgets(t, 8, src);
+	fclose(src);
+	return t;
+	
+
+}
+
 char *get_word_from_text(char *t)
 {
 	char *word; 	
+	memset(&word, 0, sizeof(word));
 	int len = 0;
 	for(int i = ps.start; i < strlen(t); i++)
 	{
@@ -67,13 +81,13 @@ int main()
 	ps.start = 0;
 	ps.cpos = 0;
 	printf("\n\033[31;1mCommand Line Typing Tester\033[0m\n\n");
-	//char *text = "Lorem ipsum dolor";
-	char *text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut ornare lectus sit amet. Nec sagittis aliquam malesuada bibendum.";
+	char *text = "Lorem ipsum dolor";
+	//char* text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut ornare lectus sit amet. Nec sagittis aliquam malesuada bibendum.";
 	printf("%s\n", text);
+	ps.plen = strlen(text);
 	printf("\n");
 	setup_terminal();
 	char *typed_word;	
-	//memset(&typed_word, 0, sizeof(typed_word));
 	while(read(STDIN_FILENO, &test, 1) == 1)
 	{
 				
@@ -90,6 +104,7 @@ int main()
 				write(STDOUT_FILENO, "\e[2K", 5);
 
 				printf("\033[32;1mCorrect word\033[0m\n");
+				sd.num_correct++;
 
 
 			} else {
@@ -100,9 +115,17 @@ int main()
 				write(STDOUT_FILENO, "\e[2K", 5);
 
 				printf("\033[31;1mWrong word\033[0m\n");
+				sd.num_wrong++;
 			}
 			memset(typed_word, 0, strlen(typed_word));
 			sd.total_words++;
+			
+		} else if(ps.cpos == ps.plen - 1) {
+			printf("\n");
+			printf("Correct:  %d\n", sd.num_correct);
+			printf("Wrong:  %d\n", sd.num_wrong);
+			break;
+
 		} else {
 			strncat(typed_word, &test, 1);	
 			

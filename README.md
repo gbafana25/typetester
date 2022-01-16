@@ -10,4 +10,4 @@ Typing practice for the command line on Linux
 
 ## TODO
 - fix first word not reading correctly
-- fix segfaulting at end of text
+- calculate stats at end of typing run

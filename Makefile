@@ -5,6 +5,8 @@ main: $(wildcard *.c)
 
 clean:
 	rm main
+debug:
+	ltrace ./main
 
 run: all
 	./main
