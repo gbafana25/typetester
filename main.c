@@ -20,7 +20,7 @@ position ps;
 typedef struct {
 	int num_correct;
 	int num_wrong;
-	double total_words;
+	int total_words;
 
 } scoring_data;
 
@@ -78,9 +78,13 @@ int main()
 	ps.curr = 0;
 	ps.start = 0;
 	ps.cpos = 0;
+	sd.num_correct = 0;
+	sd.num_wrong = 0;
+	sd.total_words = 0;
 	printf("\n\033[31;1mCommand Line Typing Tester\033[0m\n\n");
 	//char *text = "Lorem ipsum dolor";
-	char* text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+	char* text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit";
+	//char *text = "This is me. This is the shape that let others recognize me as myself. It is my symbol for myself. This is, this is, and this is as well. Representations. Everything is merely a description, not the real myself. Everything is simply a shape, a form, an identifier to let others recognize me as me. Then what am I?";
 	printf("%s\n", text);
 	ps.plen = strlen(text);
 	printf("\n");
@@ -119,10 +123,13 @@ int main()
 		else if(ps.cpos == ps.plen - 1) {
 			// workaround added to stop segfaulting at end of runs
 			strncat(typed_word, &test, 1);
-			char *s = get_word_from_text(text);
-			if(strcmp((const char * ) &s, typed_word) == 0) {
+			int fs  = (ps.plen) - ps.curr;
+			char *f = malloc(sizeof(char) * ps.plen-1);
+			strncat(f, text+ps.start, fs);
+			if(strncmp(f, typed_word, fs) == 0) {
 				sd.num_correct++;
 			}
+			sd.total_words++;
 			break;
 
 		}
@@ -136,8 +143,9 @@ int main()
 	printf("\n");
 	printf("Correct:  %d\n", sd.num_correct);
 	printf("Wrong:  %d\n", sd.num_wrong);
-	double percent_accuracy = (sd.num_correct / sd.total_words) * 100;
-	printf("Accuracy: %2.f%%\n", percent_accuracy);
+	printf("Total Words: %d\n", sd.total_words);
+	double percent_accuracy = ((double) sd.num_correct / (double) sd.total_words) * 100;
+	printf("Accuracy: %2.1f%%\n", percent_accuracy);
 
 	return 0;
 }

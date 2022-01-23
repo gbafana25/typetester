@@ -10,7 +10,7 @@ Typing practice for the command line on Linux
 - show stats at end of segment
 
 ## TODO
-- ^ fix first word not reading correctly ^, not recognizing last word 
+- ^ fix first word not reading correctly ^
 - calculate words per minute at end of run 
 
 
