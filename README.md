@@ -14,5 +14,11 @@ Typing practice for the command line on Linux
 - calculate words per minute at end of run 
 
 
+compare char by char, increment total word counter when space is reached 
+
+- struct with worng word flag
+	- set to 1 when in middle of word
+	- reset at space (in text)
+
 ^ ltrace shows null byte (\001) at beginning of string
 
