@@ -39,6 +39,7 @@ void setup_terminal()
 	struct termios options;
 	tcgetattr(STDIN_FILENO, &options);
 	options.c_lflag &= ~(ICANON);
+	options.c_lflag &= ~(ECHO);
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &options);
 
 
@@ -90,8 +91,8 @@ int main()
 	sd.num_wrong = 0;
 	sd.total_words = 0;
 	printf("\n\033[31;1mCommand Line Typing Tester\033[0m\n\n");
-	char *text = "Lorem ipsum dolor";
-	//char* text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit";
+	//char *text = "Lorem ipsum dolor";
+	char* text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit";
 	//char *text = "This is me. This is the shape that let others recognize me as myself. It is my symbol for myself. This is, this is, and this is as well. Representations. Everything is merely a description, not the real myself. Everything is simply a shape, a form, an identifier to let others recognize me as me. Then what am I?";
 	printf("%s\n", text);
 	ps.plen = strlen(text);
@@ -102,25 +103,35 @@ int main()
 	for(int i = 0; i < strlen(text); i++) {
 		read(STDIN_FILENO, &test, 1);
 		if(test == text[i]) {
+			/*
 			write(STDOUT_FILENO, "\e[2K", 5);
 			write(STDOUT_FILENO, "\r", 2);
 			write(STDOUT_FILENO, "\e[1A", 5);	
 			write(STDOUT_FILENO, "\e[2K", 5);
+			*/
 
-			printf("\033[32;1mCorrect word\033[0m\n");
+			write(STDOUT_FILENO, "\e[32;1m|\e[0m", 14);
 		
 		} else {
+			/*
 			write(STDOUT_FILENO, "\e[2K", 5);
 			write(STDOUT_FILENO, "\r", 2);
 			write(STDOUT_FILENO, "\e[1A", 5);	
 			write(STDOUT_FILENO, "\e[2K", 5);
+			*/
 
-			printf("\033[31;1mWrong word\033[0m\n");
+			write(STDOUT_FILENO, "\e[31;1m|\e[0m", 14);
+			
+			write(STDOUT_FILENO, "\e[1A", 5);	
+			write(STDOUT_FILENO, "\e[1B", 5);	
 			wf.curr_is_wrong = true;	
 		}
 
 		if(test == ' ') {
-			//printf("space\n");
+			if(text[i] != ' ') {
+				wf.curr_is_wrong = true;
+				continue;
+			} 
 			if(wf.curr_is_wrong) {
 				sd.num_wrong++;
 			} else {
@@ -140,7 +151,7 @@ int main()
 
 
 	}
-	printf("\n");
+	printf("\n\n");
 	printf("Correct:  %d\n", sd.num_correct);
 	printf("Wrong:  %d\n", sd.num_wrong);
 	printf("Total Words: %d\n", sd.total_words);
