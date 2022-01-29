@@ -140,62 +140,6 @@ int main()
 
 
 	}
-	/*
-	while(read(STDIN_FILENO, &test, 1) == 1)
-	{
-
-		if(test == ' ') {
-			char *cw = get_word_from_text(text);
-			if(strcmp(cw, typed_word) == 0) {
-				
-				
-				write(STDOUT_FILENO, "\e[2K", 5);
-				write(STDOUT_FILENO, "\r", 2);
-				write(STDOUT_FILENO, "\e[1A", 5);	
-				write(STDOUT_FILENO, "\e[2K", 5);
-
-				printf("\033[32;1mCorrect word\033[0m\n");
-				sd.num_correct++;
-
-
-			} else {
-				write(STDOUT_FILENO, "\e[2K", 5);
-				write(STDOUT_FILENO, "\r", 2);
-				
-				write(STDOUT_FILENO, "\e[1A", 5);	
-				write(STDOUT_FILENO, "\e[2K", 5);
-
-				printf("\033[31;1mWrong word\033[0m\n");
-				sd.num_wrong++;
-			}
-			memset(typed_word, 0, strlen(typed_word));
-			memset(&test, 0, sizeof(char));
-			sd.total_words++;
-			
-		} 
-		else if(ps.cpos == ps.plen - 1) {
-			// workaround added to stop segfaulting at end of runs
-			strncat(typed_word, &test, 1);
-			int fs  = (ps.plen) - ps.curr;
-			char *f = malloc(sizeof(char) * ps.plen-1);
-			strncat(f, text+ps.start, fs);
-			if(strncmp(f, typed_word, fs) == 0) {
-				sd.num_correct++;
-			} else {
-				sd.num_wrong++;
-			}
-			sd.total_words++;
-			break;
-
-		} else {
-			memset(&test, 0, sizeof(char));
-			strncat(typed_word, &test, 1);	
-			
-		}
-		
-		ps.cpos++;
-	}
-	*/
 	printf("\n");
 	printf("Correct:  %d\n", sd.num_correct);
 	printf("Wrong:  %d\n", sd.num_wrong);
