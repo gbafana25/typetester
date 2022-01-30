@@ -127,6 +127,7 @@ int main()
 			wf.curr_is_wrong = true;	
 		}
 		if(text[i] == ' ') {
+			/*
 			if(test == ' ') {
 				//sd.total_words++;
 			
@@ -139,6 +140,13 @@ int main()
 			} else {
 				wf.curr_is_wrong = true;
 			}
+			*/
+			if(wf.curr_is_wrong) {
+				sd.num_wrong++;
+			} else {
+				sd.num_correct++;
+			}
+			wf.curr_is_wrong = false;
 			sd.total_words++;
 		}
 		if(i == strlen(text) - 1) {
