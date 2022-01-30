@@ -126,19 +126,20 @@ int main()
 			write(STDOUT_FILENO, "\e[1B", 5);	
 			wf.curr_is_wrong = true;	
 		}
-
-		if(test == ' ') {
-			if(text[i] != ' ') {
-				wf.curr_is_wrong = true;
-				continue;
-			} 
-			if(wf.curr_is_wrong) {
-				sd.num_wrong++;
+		if(text[i] == ' ') {
+			if(test == ' ') {
+				//sd.total_words++;
+			
+				if(wf.curr_is_wrong) {
+					sd.num_wrong++;
+				} else {
+					sd.num_correct++;
+				}
+				wf.curr_is_wrong = false;
 			} else {
-				sd.num_correct++;
+				wf.curr_is_wrong = true;
 			}
 			sd.total_words++;
-			wf.curr_is_wrong = false;
 		}
 		if(i == strlen(text) - 1) {
 			if(test == text[i] && wf.curr_is_wrong == false) {
