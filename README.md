@@ -13,7 +13,6 @@ Typing practice for the command line on Linux.
 	- number of words right/wrong and accuracy
 
 ## TODO
-- calculate words per minute at end of run 
 
 
 

@@ -52,15 +52,15 @@ int main() {
 	sd.num_wrong = 0;
 	sd.total_words = 0;
 	printf("\n\033[31;1mCommand Line Typing Tester\033[0m\n\n");
-	//char *text = "Lorem ipsum dolor";
+	char *text = "Lorem ipsum dolor";
 	//char* text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit";
-	char *text = "This is me. This is the shape that let others recognize me as myself. It is my symbol for myself. This is, this is, and this is as well. Representations. Everything is merely a description, not the real myself. Everything is simply a shape, a form, an identifier to let others recognize me as me. Then what am I?";
+	//char *text = "This is me. This is the shape that let others recognize me as myself. It is my symbol for myself. This is, this is, and this is as well. Representations. Everything is merely a description, not the real myself. Everything is simply a shape, a form, an identifier to let others recognize me as me. Then what am I?";
 	printf("%s\n", text);
 	printf("\n");
 	setup_terminal();
 	char *typed_word;	
 	wf.curr_is_wrong = false;
-	time_t init, wpm;
+	time_t init, end;
 	init = time(NULL);
 	for(int i = 0; i < strlen(text); i++) {
 		read(STDIN_FILENO, &test, 1);
@@ -94,14 +94,16 @@ int main() {
 
 
 	}
-	wpm = time(NULL);
+	end = time(NULL);
+	int time_diff = end - init;
 	printf("\n\n");
 	printf("Correct:  %d\n", sd.num_correct);
 	printf("Wrong:  %d\n", sd.num_wrong);
 	printf("Total Words: %d\n", sd.total_words);
 	double percent_accuracy = ((double) sd.num_correct / (double) sd.total_words) * 100;
 	printf("Accuracy: %2.1f%%\n", percent_accuracy);
-	printf("Speed: %d WPM\n", sd.total_words/((wpm-init)/60));
+	float min = ((float)time_diff/60.0); 
+	printf("Speed: %3.f WPM\n", (float)sd.total_words/min);
 
 	return 0;
 }
