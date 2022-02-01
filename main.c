@@ -40,11 +40,15 @@ void setup_terminal()
 
 }
 
-char *read_from_file() {
+char *read_from_file(char *fname) {
 	FILE *src;
-	src = fopen("a.txt", "r");
-	char *t = malloc(8 * sizeof(char));
-	fgets(t, 8, src);
+	src = fopen(fname, "r");
+	fseek(src, 0L, SEEK_END);
+	size_t size = ftell(src);
+	rewind(src);
+	char *t = malloc((size) * sizeof(char));
+	size_t file = fread(t, sizeof(char), size, src);	
+	//t[file] = '\0';
 	fclose(src);
 	return t;
 	
@@ -57,10 +61,9 @@ int main() {
 	sd.num_correct = 0;
 	sd.num_wrong = 0;
 	sd.total_words = 0;
-	printf("\n\033[31;1mCommand Line Typing Tester\033[0m\n\n");
-	//char *text = "Lorem ipsum dolor";
-	//char* text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit";
-	char *text = "This is me. This is the shape that let others recognize me as myself. It is my symbol for myself. This is, this is, and this is as well. Representations. Everything is merely a description, not the real myself. Everything is simply a shape, a form, an identifier to let others recognize me as me. Then what am I?";
+	printf("\n\033[31;1mCommand Line Typing Tester\n\nHit enter at end of paragraph!\033[0m\n\n");
+	char *text = read_from_file("a.txt");	
+	//char *text = "This is me. This is the shape that let others recognize me as myself. It is my symbol for myself. This is, this is, and this is as well. Representations. Everything is merely a description, not the real myself. Everything is simply a shape, a form, an identifier to let others recognize me as me. Then what am I?";
 	printf("%s\n", text);
 	printf("\n");
 	setup_terminal();
