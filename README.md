@@ -13,8 +13,7 @@ Typing practice for the command line on Linux.
 	- number of words right/wrong and accuracy
 
 ## TODO
-
-
+- enable loading of text from files
 
 
 
