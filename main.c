@@ -48,7 +48,6 @@ char *read_from_file(char *fname) {
 	rewind(src);
 	char *t = malloc((size) * sizeof(char));
 	size_t file = fread(t, sizeof(char), size, src);	
-	//t[file] = '\0';
 	fclose(src);
 	return t;
 	
@@ -63,7 +62,6 @@ int main() {
 	sd.total_words = 0;
 	printf("\n\033[31;1mCommand Line Typing Tester\n\nHit enter at end of paragraph!\033[0m\n\n");
 	char *text = read_from_file("a.txt");	
-	//char *text = "This is me. This is the shape that let others recognize me as myself. It is my symbol for myself. This is, this is, and this is as well. Representations. Everything is merely a description, not the real myself. Everything is simply a shape, a form, an identifier to let others recognize me as me. Then what am I?";
 	printf("%s\n", text);
 	printf("\n");
 	setup_terminal();
@@ -78,13 +76,21 @@ int main() {
 		read(STDIN_FILENO, &test, 1);
 		// if input equals current character... 
 		if(test == text[i]) {
-			write(STDOUT_FILENO, "\e[32;1m|\e[0m", 14);
+			//write(STDOUT_FILENO, "\e[32;1m|\e[0m", 14);
+			write(STDOUT_FILENO, "\e[32;1m", 8);
+			write(STDOUT_FILENO, (void *) &test, 1);
+			write(STDOUT_FILENO, "\e[0m", 5);
 		
 		} else {
-			write(STDOUT_FILENO, "\e[31;1m|\e[0m", 14);
+			//write(STDOUT_FILENO, "\e[31;1m|\e[0m", 14);
+			write(STDOUT_FILENO, "\e[31;1m", 8);
+			write(STDOUT_FILENO, (void *) &test, 1);
+			write(STDOUT_FILENO, "\e[0m", 5);
 			
+			/*
 			write(STDOUT_FILENO, "\e[1A", 5);	
 			write(STDOUT_FILENO, "\e[1B", 5);	
+			*/
 			wf.curr_is_wrong = true;	
 		}
 		/* 
@@ -124,7 +130,8 @@ int main() {
 	printf("Accuracy: %2.1f%%\n", percent_accuracy);
 	// when doing floating point division, cast each non-float invidually
 	float min = ((float)time_diff/60.0); 
-	printf("Speed: %3.f WPM\n", (float)sd.total_words/min);
+	printf("Speed: %3.f WPM\n", (float)sd.num_correct/min);
+	printf("Raw Speed: %3.f WPM\n", (float)sd.total_words/min);
 
 	return 0;
 }
