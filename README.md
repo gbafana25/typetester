@@ -2,7 +2,9 @@
 
 Typing practice for the command line on Linux.
 
-## Outline
+## Description/Program Structure
+
+- loads text from `a.txt`
 
 - enable canonical mode in terminal (read by character) 
 - disable echoing of characters
@@ -12,8 +14,15 @@ Typing practice for the command line on Linux.
 - show stats at end of segment
 	- number of words right/wrong and accuracy
 
+
+## Usage
+
+`make run`
+
+
+`make debug` will run `ltrace`
+
 ## TODO
-- enable loading of text from files
 
 
 
