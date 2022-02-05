@@ -65,7 +65,6 @@ int main() {
 	write(STDOUT_FILENO, "\e7", 3);
 	char *text = read_from_file("a.txt");	
 	printf("%s\n", text);
-	printf("\n");	
 	// restore saved cursor position
 	write(STDOUT_FILENO, "\e8", 3);
 	setup_terminal();

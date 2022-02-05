@@ -22,6 +22,8 @@ Typing practice for the command line on Linux.
 
 `make debug` will run `ltrace`
 
+**type `reset` after every run**
+
 ## TODO
 
 
