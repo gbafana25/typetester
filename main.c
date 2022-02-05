@@ -61,9 +61,13 @@ int main() {
 	sd.num_wrong = 0;
 	sd.total_words = 0;
 	printf("\n\033[31;1mCommand Line Typing Tester\n\nHit enter at end of paragraph!\033[0m\n\n");
+	// save current cursor position
+	write(STDOUT_FILENO, "\e7", 3);
 	char *text = read_from_file("a.txt");	
 	printf("%s\n", text);
-	printf("\n");
+	printf("\n");	
+	// restore saved cursor position
+	write(STDOUT_FILENO, "\e8", 3);
 	setup_terminal();
 	char *typed_word;	
 	wf.curr_is_wrong = false;
@@ -106,7 +110,7 @@ int main() {
 			}
 			wf.curr_is_wrong = false;
 			sd.total_words++;
-		}
+		}	
 		// workaround to read the last character
 		if(i == strlen(text) - 1) {
 			if(test == text[i] && wf.curr_is_wrong == false) {
