@@ -43,7 +43,9 @@ void setup_terminal()
 char *read_from_file(char *fname) {
 	FILE *src;
 	src = fopen(fname, "r");
+	// move pointer to end of file
 	fseek(src, 0L, SEEK_END);
+	// get string length
 	size_t size = ftell(src);
 	rewind(src);
 	char *t = malloc((size) * sizeof(char));
@@ -79,21 +81,15 @@ int main() {
 		read(STDIN_FILENO, &test, 1);
 		// if input equals current character... 
 		if(test == text[i]) {
-			//write(STDOUT_FILENO, "\e[32;1m|\e[0m", 14);
 			write(STDOUT_FILENO, "\e[32;1m", 8);
 			write(STDOUT_FILENO, (void *) &test, 1);
 			write(STDOUT_FILENO, "\e[0m", 5);
 		
 		} else {
-			//write(STDOUT_FILENO, "\e[31;1m|\e[0m", 14);
 			write(STDOUT_FILENO, "\e[31;1m", 8);
 			write(STDOUT_FILENO, (void *) &test, 1);
 			write(STDOUT_FILENO, "\e[0m", 5);
 			
-			/*
-			write(STDOUT_FILENO, "\e[1A", 5);	
-			write(STDOUT_FILENO, "\e[1B", 5);	
-			*/
 			wf.curr_is_wrong = true;	
 		}
 		/* 

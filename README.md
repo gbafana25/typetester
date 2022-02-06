@@ -22,7 +22,7 @@ Typing practice for the command line on Linux.
 
 `make debug` will run `ltrace`
 
-**type `reset` after every run**
+- type `reset` if cursor doesn't start at the correct place
 
 ## TODO
 
