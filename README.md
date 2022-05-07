@@ -25,6 +25,6 @@ Typing practice for the command line on Linux.
 - type `reset` if cursor doesn't start at the correct place
 
 ## TODO
-
+- add more pieces of text
 
 
