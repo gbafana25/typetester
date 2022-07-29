@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 
+struct termios options;
 
 // holds number of correct, wrong, and total words
 typedef struct {
@@ -29,12 +30,18 @@ word_flags wf;
 // change terminal settings
 void setup_terminal() 
 {
-	struct termios options;
 	tcgetattr(STDIN_FILENO, &options);
+	struct termios new_opt = options;
 	// enable canonical mode
-	options.c_lflag &= ~(ICANON);
+	new_opt.c_lflag &= ~(ICANON);
 	// disable echo
-	options.c_lflag &= ~(ECHO);
+	new_opt.c_lflag &= ~(ECHO);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &new_opt);
+
+
+}
+
+void reset_terminal() {
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &options);
 
 
@@ -62,6 +69,8 @@ int main() {
 	sd.num_correct = 0;
 	sd.num_wrong = 0;
 	sd.total_words = 0;
+	write(STDOUT_FILENO, "\e[2J", 4);
+	write(STDOUT_FILENO, "\e[H", 3);
 	printf("\n\033[31;1mCommand Line Typing Tester\n\nHit enter at end of paragraph!\033[0m\n\n");
 	// save current cursor position
 	write(STDOUT_FILENO, "\e7", 3);
@@ -87,7 +96,7 @@ int main() {
 		
 		} else {
 			write(STDOUT_FILENO, "\e[31;1m", 8);
-			write(STDOUT_FILENO, (void *) &test, 1);
+			write(STDOUT_FILENO, (void *) &text[i], 1);
 			write(STDOUT_FILENO, "\e[0m", 5);
 			
 			wf.curr_is_wrong = true;	
@@ -114,7 +123,7 @@ int main() {
 				sd.num_wrong++;
 			}
 			sd.total_words++;
-		}
+		}	
 
 
 	}
@@ -131,6 +140,7 @@ int main() {
 	float min = ((float)time_diff/60.0); 
 	printf("Speed: %3.f WPM\n", (float)sd.num_correct/min);
 	printf("Raw Speed: %3.f WPM\n", (float)sd.total_words/min);
+	reset_terminal();
 
 	return 0;
 }
