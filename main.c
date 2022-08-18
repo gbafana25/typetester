@@ -5,8 +5,11 @@
 #include <string.h>
 #include <stdbool.h>
 
+#include "client.h"
+#include "term.h"
 
-struct termios options;
+
+//struct termios options;
 
 // holds number of correct, wrong, and total words
 typedef struct {
@@ -27,25 +30,7 @@ typedef struct {
 
 word_flags wf;
 
-// change terminal settings
-void setup_terminal() 
-{
-	tcgetattr(STDIN_FILENO, &options);
-	struct termios new_opt = options;
-	// enable canonical mode
-	new_opt.c_lflag &= ~(ICANON);
-	// disable echo
-	new_opt.c_lflag &= ~(ECHO);
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &new_opt);
 
-
-}
-
-void reset_terminal() {
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &options);
-
-
-}
 
 char *read_from_file(char *fname) {
 	FILE *src;
@@ -63,15 +48,23 @@ char *read_from_file(char *fname) {
 
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+	if(argc == 3) {
+		int enable_multiplayer = strncmp(argv[1], "mp", 2);
+		if(enable_multiplayer == 0 && strlen(argv[2]) <= 9) {
+			setup_terminal();
+			connect_to_server(argv[2]);	
+			reset_terminal();
+			exit(0);
+		}
+	}
 	char test;
 	// all variables need to be zeroed
 	sd.num_correct = 0;
 	sd.num_wrong = 0;
 	sd.total_words = 0;
-	write(STDOUT_FILENO, "\e[2J", 4);
-	write(STDOUT_FILENO, "\e[H", 3);
-	printf("\n\033[31;1mCommand Line Typing Tester\n\nHit enter at end of paragraph!\033[0m\n\n");
+	clr_screen();	
+	printf("\n\033[31;1mCommand Line Typing Tester\033[0m\n\n");//Hit enter at end of paragraph!\033[0m\n\n");
 	// save current cursor position
 	write(STDOUT_FILENO, "\e7", 3);
 	char *text = read_from_file("a.txt");	
