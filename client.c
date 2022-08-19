@@ -30,16 +30,14 @@ int connect_to_server(char *un) {
 	send(sock, ud.uname, strlen(ud.uname), 0);
 	recv(sock, &seg_size, sizeof(int), 0);
 	seg_size += 1;
-	//printf("%d\n", seg_size);
 	char tx[seg_size];
-	recv(sock, tx, sizeof(tx) - 1, 0);
-	tx[seg_size] = '\0';
+	recv(sock, tx, sizeof(tx), 0);
+	clr_screen();
 	// save current cursor position
 	write(STDOUT_FILENO, "\e7", 3);
-	clr_screen();
+	printf("%s", tx);
 	// restore saved cursor position
 	write(STDOUT_FILENO, "\e8", 3);
-	printf("%s\n", tx);
 	while(1) {
 		read(STDIN_FILENO, &in, 1);
 		
