@@ -4,5 +4,5 @@ typedef struct {
 } user_data;
 
 
-int connect_to_server(char *un);
+int connect_to_server();
 

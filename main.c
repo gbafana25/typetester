@@ -49,11 +49,11 @@ char *read_from_file(char *fname) {
 }
 
 int main(int argc, char *argv[]) {
-	if(argc == 3) {
+	if(argc == 2) {
 		int enable_multiplayer = strncmp(argv[1], "mp", 2);
-		if(enable_multiplayer == 0 && strlen(argv[2]) <= 9) {
+		if(enable_multiplayer == 0) {
 			setup_terminal();
-			connect_to_server(argv[2]);	
+			connect_to_server();	
 			reset_terminal();
 			exit(0);
 		}
