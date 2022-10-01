@@ -12,8 +12,6 @@
 #include "term.h"
 
 int connect_to_server() {
-	//user_data ud; 
-	//ud.uname = un;
 	struct sockaddr_in sr;
 	int seg_size = 0;
 	int sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -50,13 +48,16 @@ int connect_to_server() {
 			write(STDOUT_FILENO, (void *) &in, 1);
 			write(STDOUT_FILENO, "\e[0m", 5);
 		} else if(res == 0) {
+			/*
 			write(STDOUT_FILENO, "\e[31;1m", 8);
 			write(STDOUT_FILENO, (void *) &in, 1);
 			write(STDOUT_FILENO, "\e[0m", 5);
+			*/
 		}
 		
 	}
 	close(sock);
+
 
 
 }
