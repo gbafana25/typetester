@@ -47,14 +47,14 @@ int connect_to_server() {
 			write(STDOUT_FILENO, "\e[32;1m", 8);
 			write(STDOUT_FILENO, (void *) &in, 1);
 			write(STDOUT_FILENO, "\e[0m", 5);
+			
 		} else if(res == 0) {
 			/*
 			write(STDOUT_FILENO, "\e[31;1m", 8);
 			write(STDOUT_FILENO, (void *) &in, 1);
 			write(STDOUT_FILENO, "\e[0m", 5);
 			*/
-		}
-		
+		} 		
 	}
 	close(sock);
 
