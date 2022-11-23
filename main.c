@@ -53,8 +53,10 @@ int main(int argc, char *argv[]) {
 		int enable_multiplayer = strncmp(argv[1], "mp", 2);
 		if(enable_multiplayer == 0) {
 			setup_terminal();
-			connect_to_server();	
+			//int p = connect_to_server();		
+			connect_to_server();
 			reset_terminal();
+			//printf("%d\n", p);
 			exit(0);
 		}
 	}

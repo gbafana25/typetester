@@ -54,9 +54,13 @@ int connect_to_server() {
 			write(STDOUT_FILENO, (void *) &in, 1);
 			write(STDOUT_FILENO, "\e[0m", 5);
 			*/
-		} 		
+		} else if(res == 2) {
+			close(sock);
+			break;
+		}
 	}
 	close(sock);
+	return -1;
 
 
 
