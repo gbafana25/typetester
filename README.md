@@ -1,6 +1,6 @@
-# typetester
+# typetester (Multiplayer branch)
 
-Typing practice for the command line on Linux.
+Typing practice for the command line on Linux. Use this branch for interfacing with [typesrv](https://github.com/gbafana25/typesrv)
 
 ## Description/Program Structure
 
@@ -13,6 +13,7 @@ Typing practice for the command line on Linux.
 	- checked every space
 - show stats at end of segment
 	- number of words right/wrong and accuracy
+- to enable multiplayer mode, clone from the multi branch and run: `./main mp`
 
 
 ## Usage
@@ -22,9 +23,5 @@ Typing practice for the command line on Linux.
 
 `make debug` will run `ltrace`
 
-- type `reset` if cursor doesn't start at the correct place
-
-## TODO
-- add more pieces of text
 
 
